@@ -22,7 +22,7 @@ OK: DB is marked clean and migration succeeded
 
 Here's an alternative solution that doesn't force the user into a DO block:
 
-1. Run `BEGIN; <migration> UPDATE schema_migrations SET dirty = false; COMMIT;`
-2. If that fails, run `UPDATE schema_migrations SET dirty = false;`
+1. Run `BEGIN; <migration> UPDATE schema_migrations SET version = <next version>; COMMIT;`
+2. If that fails, run `UPDATE schema_migrations SET dirty = true;`
 
 That way, if the `migrate` command gets canceled or otherwise disconnects between steps 1 and 2, the DB is still in a consistent state.
